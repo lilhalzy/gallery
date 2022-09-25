@@ -1,15 +1,17 @@
-const gallery = require("./gallery.json")
+let gallery = require("./gallery.json")
+
+gallery = gallery.map(item => {
+  return {
+    src: item.urls.thumb,
+    width: item.width,
+    height: item.height
+  }
+})
 
 console.log(gallery);
 
 export function App() {
   return (
-    <div>
-      {gallery.map(item => {
-        return (
-          <img src={item.urls.thumb} />
-        )
-      })}
-    </div>
+    <h1>Sup peopeww</h1>
   )
 }
