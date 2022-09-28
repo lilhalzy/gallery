@@ -1,16 +1,9 @@
+import { createLayout } from "./layout";
 const gallery = require("./gallery.json");
 
 export function Gallery() {
-  const rows = [];
 
-  let currRow = {
-    items: [],
-  };
-  rows.push(currRow);
-
-  for (const item of gallery) {
-    currRow.items.push(item);
-  }
+  const rows = createLayout(gallery)
 
   const photoWidth = 600;
 
