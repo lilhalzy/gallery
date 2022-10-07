@@ -33,11 +33,45 @@ export function createLayout(items, photoWidth, targetRowHeight) {
         currRowWidth = 0;
       }
     }
+    // 
+    // clone the item to modify it without modifying the original
+    // 
+    const clone = Object.assign({}, item, {
+      width: computeWidth,
+      height: targetRowHeight,
+      aspectRatio: aspectRatio,
+    })
 
-    currRow.items.push(item)
+    // 
+    //  Add the item to the row
+    // 
+    currRow.items.push(clone)
     currRowWidth += computeWidth
   }
+  // 
+  // For all rows except the last row, stretch the items towards the right hand boundary
+  // 
+  for (let rowIndex = 0; rowIndex < rows.length - 1; rowIndex++) {
+    const row = rows[rowIndex]
 
+    let rowWidth = 0
+    for(const item of row.items) {
+      rowWidth += item.width
+    }
+
+    const gap = photoWidth - rowWidth
+    const deltaWidth = gap / row.items.length
+
+    // 
+    // Expand each item to fill the gap
+    // 
+    for (const item of row.items) {
+      const aspectRatio = item.aspectRatio 
+
+      item.width += deltaWidth
+      item.height = item.width * (1.0 / aspectRatio)
+    }
+  }
   return rows
 
   // const rows = [];
