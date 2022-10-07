@@ -35,11 +35,11 @@ gallery = gallery.map(item => {
 //       },
 //     ];
 
-// export function Gallery() {
+export function Gallery() {
 
-//   const photoWidth = 600;
-//   const targetRowHeight = 200
-//   const rows = createLayout(gallery, photoWidth, targetRowHeight)
+  const photoWidth = 600;
+  const targetRowHeight = 200
+  const rows = createLayout(gallery, photoWidth, targetRowHeight)
 
   return (
     <div
@@ -66,3 +66,4 @@ gallery = gallery.map(item => {
       })}
     </div>
   );
+}
