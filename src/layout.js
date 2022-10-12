@@ -4,18 +4,16 @@ export function createLayout(items, photoWidth, targetRowHeight) {
   if (!items || !items.length) {
     return []
   }
- 
   const rows = []
 
   // loop over items
   let currRow = {
     items: [],
     height: targetRowHeight,
+    width: 0,
   }
 
   rows.push(currRow)
-
-  let currRowWidth = 0
 
   for (const item of items) {
 
@@ -23,14 +21,14 @@ export function createLayout(items, photoWidth, targetRowHeight) {
     const computeWidth = targetRowHeight * aspectRatio
 
     if (currRow.items.length > 0) {
-      if (currRowWidth + computeWidth > photoWidth) {
+      if (currRow.width + computeWidth > photoWidth) {
         currRow = {
           items: [],
           height: targetRowHeight,
+          width: 0,
         }
         rows.push(currRow)
 
-        currRowWidth = 0;
       }
     }
     // 
@@ -46,7 +44,7 @@ export function createLayout(items, photoWidth, targetRowHeight) {
     //  Add the item to the row
     // 
     currRow.items.push(clone)
-    currRowWidth += computeWidth
+    currRow.width += computeWidth
   }
   // 
   // For all rows except the last row, stretch the items towards the right hand boundary
@@ -62,6 +60,8 @@ export function createLayout(items, photoWidth, targetRowHeight) {
     const gap = photoWidth - rowWidth
     const deltaWidth = gap / row.items.length
 
+    let maxThumbHeight = 0
+
     // 
     // Expand each item to fill the gap
     // 
@@ -70,7 +70,13 @@ export function createLayout(items, photoWidth, targetRowHeight) {
 
       item.width += deltaWidth
       item.height = item.width * (1.0 / aspectRatio)
+      maxThumbHeight = Math.max(maxThumbHeight, item.height)
     }
+
+    // 
+    // update row height
+    // 
+    row.height = maxThumbHeight
   }
   return rows
 

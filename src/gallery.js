@@ -9,6 +9,7 @@ gallery = gallery.map(item => {
     height: item.height,
   }
 })
+
 // const gallery = [
 //     {
 //       thumb: "https://via.placeholder.com/140x100",
@@ -55,7 +56,7 @@ export function Gallery() {
             style={{
               display: "flex",
               flexDirection: "row",
-              height: `${targetRowHeight}px`,
+              height: `${row.height}px`,
             }}
           >
             {row.items.map((item) => {
